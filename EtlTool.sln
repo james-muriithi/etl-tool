@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtlTool", "EtlTool\EtlTool.csproj", "{A098D8BD-9EEB-4182-95EB-12114799CFEB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A098D8BD-9EEB-4182-95EB-12114799CFEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A098D8BD-9EEB-4182-95EB-12114799CFEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A098D8BD-9EEB-4182-95EB-12114799CFEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A098D8BD-9EEB-4182-95EB-12114799CFEB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {846B247B-1A7C-4829-8564-904A06C1319F}
+	EndGlobalSection
+EndGlobal
