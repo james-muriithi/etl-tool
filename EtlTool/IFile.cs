@@ -3,6 +3,6 @@
     public interface IFile
     {
         void read(string path);
-        string decrypt(string EncrptedText);
+        string decode(string EncodedText);
     }
 }
