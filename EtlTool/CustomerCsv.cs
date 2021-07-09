@@ -7,19 +7,18 @@ namespace EtlTool
 {
     public class CustomerCsv : IFile
     {
+        private readonly IDecoder _decoder;
         private string _delimeter = ",";
-        // - decode text from base64 to readable text;
-        public string decode(string encodedText)
+        public TaskCsv(IDecoder decoder)
         {
-            byte[] data = Convert.FromBase64String(encodedText);
-            return Encoding.Unicode.GetString(data);
+            this._decoder = decoder;
         }
 
         // read data from the csv
         public void read(string path)
         {
             var encodedText = File.ReadAllText(path);
-            var decodedText = decode(encodedText);
+            var decodedText = _decoder.Decode(encodedText);
             // Console.WriteLine(DecodedText);
 
             // - parse data so you have rows with column names;
