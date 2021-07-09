@@ -1,4 +1,4 @@
-namespace EtlTool
+namespace Cryptography
 {
     public interface IDecoder
     {

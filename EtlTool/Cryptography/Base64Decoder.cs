@@ -1,4 +1,4 @@
-namespace EtlTool
+namespace Cryptography
 {
     class Base64Decoder : IDecoder
     {

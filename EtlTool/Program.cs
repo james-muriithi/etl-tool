@@ -1,4 +1,6 @@
-﻿namespace EtlTool
+﻿using Cryptography;
+
+namespace EtlTool
 {
     partial class Program
     {
