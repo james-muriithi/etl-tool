@@ -7,55 +7,55 @@ namespace EtlTool
 {
     public class TaskCsv : IFile
     {
-        private string Delimeter = ",";
+        private string _delimeter = ",";
         // - decode text from base64 to readable text;
-        public string decode(string EncodedText)
+        public string decode(string encodedText)
         {
-            byte[] data = Convert.FromBase64String(EncodedText);
+            byte[] data = Convert.FromBase64String(encodedText);
             return Encoding.Unicode.GetString(data);
         }
 
         // read data from the csv
         public void read(string path)
         {
-            var EncodedText = File.ReadAllText(path);
-            var DecodedText = decode(EncodedText);
+            var encodedText = File.ReadAllText(path);
+            var decodedText = decode(encodedText);
             // Console.WriteLine(DecodedText);
 
             // - parse data so you have rows with column names;
             // - map data to an oobject;
 
-            var rows = DecodedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            var rows = decodedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             //tasks list
-            var Tasks = new List<Task>();
+            var tasks = new List<Task>();
             // columns list
-            var ColumnTitles = new List<string>();
+            var columnTitles = new List<string>();
             int index = 0;
             foreach (var row in rows)
             {
-                var columns = row.Split(Delimeter);
+                var columns = row.Split(_delimeter);
                 //if index is zero define the columns
                 if (index == 0)
                 {
                     foreach (var column in columns)
                     {
-                        ColumnTitles.Add(column);
+                        columnTitles.Add(column);
                     }
                 }
                 else
                 {
-                    var Task = new Task();
+                    var task = new Task();
                     for (var i = 0; i < columns.Length; i++)
                     {
-                        if (ColumnTitles[i].ToLower() == "id")
-                            Task.Id = columns[i];
-                        else if (ColumnTitles[i].ToLower() == "description")
-                            Task.Description = columns[i];
-                        else if (ColumnTitles[i].ToLower() == "customer_id")
-                            Task.CustomerId = columns[i];
+                        if (columnTitles[i].ToLower() == "id")
+                            task.Id = columns[i];
+                        else if (columnTitles[i].ToLower() == "description")
+                            task.Description = columns[i];
+                        else if (columnTitles[i].ToLower() == "customer_id")
+                            task.CustomerId = columns[i];
                     }
 
-                    Console.WriteLine(Task.Id);
+                    Console.WriteLine(task.Id);
                 }
                 index++;
             }
