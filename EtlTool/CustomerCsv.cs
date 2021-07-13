@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Text;
 using System.Collections.Generic;
+using Cryptography;
 
 namespace EtlTool
 {
@@ -9,7 +9,8 @@ namespace EtlTool
     {
         private readonly IDecoder _decoder;
         private string _delimeter = ",";
-        public TaskCsv(IDecoder decoder)
+
+        public CustomerCsv(IDecoder decoder)
         {
             this._decoder = decoder;
         }

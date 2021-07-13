@@ -9,7 +9,7 @@ namespace EtlTool
             // Suggestion here is to come up with the plan first, for example:
 
             // initialize a Base64Decoder object
-            var base64Decoder = Base64Decoder();
+            var base64Decoder = new Base64Decoder();
 
             // Feel free to extand or rewrite this plan.
             var Path = @"C:\Users\James\Downloads\Compressed\Project 4 - James Muriithi\customers-encrypted.csv";

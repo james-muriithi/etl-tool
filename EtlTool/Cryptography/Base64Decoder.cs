@@ -1,3 +1,6 @@
+using System;
+using System.Text;
+
 namespace Cryptography
 {
     class Base64Decoder : IDecoder
