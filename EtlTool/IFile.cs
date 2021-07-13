@@ -3,6 +3,6 @@
     public interface IFile
     {
         // - read file content;
-        void read(string path);
+        void Read(string path);
     }
 }

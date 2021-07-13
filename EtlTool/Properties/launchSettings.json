@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "EtlTool": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\James\\Downloads\\Compressed\\Project 4 - James Muriithi\\customers-encrypted.csv\" \"C:\\Users\\James\\Downloads\\Compressed\\Project 4 - James Muriithi\\tasks-encrypted.csv\""
+    }
+  }
+}

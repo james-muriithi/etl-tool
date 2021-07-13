@@ -1,4 +1,7 @@
 ﻿using Cryptography;
+using System;
+using System.IO;
+using Reader;
 
 namespace EtlTool
 {
@@ -6,20 +9,39 @@ namespace EtlTool
     {
         static void Main(string[] args)
         {
+            foreach(var arg in args)
+            {
+                Console.WriteLine(arg);
+            }
             // Suggestion here is to come up with the plan first, for example:
 
-            // initialize a Base64Decoder object
-            var base64Decoder = new Base64Decoder();
+            // check if arguments were provided
 
-            // Feel free to extand or rewrite this plan.
-            var Path = @"C:\Users\James\Downloads\Compressed\Project 4 - James Muriithi\customers-encrypted.csv";
-            var CustomerCsv = new CustomerCsv(base64Decoder);
-            CustomerCsv.read(Path);
+            if(args.Length > 0)
+            {
+                // initialize a Base64Decoder object
+                var base64Decoder = new Base64Decoder();
 
-            var PathTasks = @"C:\Users\James\Downloads\Compressed\Project 4 - James Muriithi\tasks-encrypted.csv";
-            var TaskCsv = new TaskCsv(base64Decoder);
+                // Feel free to extand or rewrite this plan.
+                var customerCsvPath = @args[0];
+                if (File.Exists(customerCsvPath))
+                {
+                    var customerCsv = new CustomerCsv(base64Decoder);
+                    customerCsv.Read(customerCsvPath);
+                }
 
-            TaskCsv.read(PathTasks);
+                var tasksCsvPath = @args[1];
+                if (File.Exists(tasksCsvPath))
+                {
+                    var tasksFileReader = new TaskCsvReader(base64Decoder);
+                    var taskCsv = new TaskCsv(tasksFileReader);
+                    taskCsv.Read(tasksCsvPath);
+                }
+            }
+            else
+            {
+                Console.WriteLine("please provide file path arguments");
+            }
         }
     }
 }
