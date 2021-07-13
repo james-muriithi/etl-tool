@@ -1,24 +1,25 @@
-﻿using System;
+﻿using Cryptography;
 using System.IO;
 using System.Collections.Generic;
-using Cryptography;
+using EtlTool;
+using System;
 
-namespace EtlTool
+namespace Reader
 {
-    public class CustomerCsv : IFile
+    public class CustomerCsvReader : IFileReader
     {
         private readonly IDecoder _decoder;
         private string _delimeter = ",";
 
-        public CustomerCsv(IDecoder decoder)
+        public CustomerCsvReader(IDecoder decoder)
         {
             this._decoder = decoder;
         }
 
-        // read data from the csv
-        public void read(string path)
+
+        public void Read(string filePath)
         {
-            var encodedText = File.ReadAllText(path);
+            var encodedText = File.ReadAllText(filePath);
             var decodedText = _decoder.Decode(encodedText);
             // Console.WriteLine(DecodedText);
 
@@ -31,7 +32,7 @@ namespace EtlTool
             // columns list
             var columnTitles = new List<string>();
             int index = 0;
-            foreach(var row in rows)
+            foreach (var row in rows)
             {
                 // What if value in some cell will contain the same symbol as delimiter? 
                 var columns = row.Split(_delimeter);

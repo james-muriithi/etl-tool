@@ -1,26 +1,26 @@
-﻿using System;
+﻿using Cryptography;
 using System.IO;
 using System.Collections.Generic;
-using Cryptography;
+using EtlTool;
+using System;
 
-namespace EtlTool
+namespace Reader
 {
-    public class TaskCsv : IFile
+    public class TaskCsvReader : IFileReader
     {
         private readonly IDecoder _decoder;
         private string _delimeter = ",";
 
-        public TaskCsv(IDecoder decoder)
+        public TaskCsvReader(IDecoder decoder)
         {
             this._decoder = decoder;
         }
 
-        // read data from the csv
-        public void read(string path)
+
+        public void Read(string filePath)
         {
-            var encodedText = File.ReadAllText(path);
+            var encodedText = File.ReadAllText(filePath);
             var decodedText = _decoder.Decode(encodedText);
-            // Console.WriteLine(DecodedText);
 
             // - parse data so you have rows with column names;
             // - map data to an oobject;
