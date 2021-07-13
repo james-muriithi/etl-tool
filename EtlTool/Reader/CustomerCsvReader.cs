@@ -48,8 +48,8 @@ namespace Reader
                 {
                     // I believe your program will become more adoptable to changes if you split 
                     // the part that parses the file and the part that maps it to some entity. 
-                    // In current implementation you duplicate the process of parsing in CustomerCsv and TaskCsv.
-                    // Consider create CsvParser or CsvReader and put all logic related to data reading inside it.
+                    // In current implementation you duplicate the process of parsing in CustomerCsvReader and TaskCsvReader.
+                    // Consider create a unified CsvReader and put all logic related to data reading inside it.
                     // And map data to particular model somewhere else.
                     
                     // This is change is also a part of SOLID principals.
