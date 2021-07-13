@@ -3,11 +3,11 @@ using Cryptography;
 
 namespace EtlTool
 {
-    public class TaskCsv
+    public class TaskData
     {
         private readonly IFileReader _fileReader;
 
-        public TaskCsv(IFileReader fileReader)
+        public TaskData(IFileReader fileReader)
         {
             this._fileReader = fileReader;
         }

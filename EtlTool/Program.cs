@@ -9,10 +9,6 @@ namespace EtlTool
     {
         static void Main(string[] args)
         {
-            foreach(var arg in args)
-            {
-                Console.WriteLine(arg);
-            }
             // Suggestion here is to come up with the plan first, for example:
 
             // check if arguments were provided
@@ -26,7 +22,8 @@ namespace EtlTool
                 var customerCsvPath = @args[0];
                 if (File.Exists(customerCsvPath))
                 {
-                    var customerCsv = new CustomerCsv(base64Decoder);
+                    var customerCsvReader = new CustomerCsvReader(base64Decoder);
+                    var customerCsv = new CustomerData(customerCsvReader);
                     customerCsv.Read(customerCsvPath);
                 }
 
@@ -34,8 +31,8 @@ namespace EtlTool
                 if (File.Exists(tasksCsvPath))
                 {
                     var tasksFileReader = new TaskCsvReader(base64Decoder);
-                    var taskCsv = new TaskCsv(tasksFileReader);
-                    taskCsv.Read(tasksCsvPath);
+                    var tasksData = new TaskData(tasksFileReader);
+                    tasksData.Read(tasksCsvPath);
                 }
             }
             else
