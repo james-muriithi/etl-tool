@@ -19,22 +19,16 @@
         // And the first name of the customer now has the public getter and setter
         // so it can be modified outside of the class.
         public string FirstName { get; set; }
-        
+
         // TODO I let you to decide what to do with these two field.
-        public string LastName, PhoneNumber;
-        
-        
-        // Another example of how the properties could be used:
-        /*
-            // Public constructor initialized with a unique identifier of a customer. 
-            public Customer(string id)
-            {
-                // The Id property is readonly and can be initialized only from constructor.
-                Id = id;
-            }
+        public string LastName { get; set; }
             
-            // The readonly property that can only be read be user of the class.
-            public string Id { get; }
-        */
+        public string PhoneNumber { get; set; }
+
+
+        /*public Customer(string id)
+        {
+            Id = id;
+        }*/
     }
 }

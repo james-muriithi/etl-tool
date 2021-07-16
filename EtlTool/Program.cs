@@ -22,7 +22,7 @@ namespace EtlTool
                 var customerCsvPath = @args[0];
                 if (File.Exists(customerCsvPath))
                 {
-                    var customerCsvReader = new CustomerCsvReader(base64Decoder);
+                    var customerCsvReader = new CsvReader(base64Decoder);
                     var customerCsv = new CustomerData(customerCsvReader);
                     customerCsv.Read(customerCsvPath);
                 }
@@ -30,7 +30,7 @@ namespace EtlTool
                 var tasksCsvPath = @args[1];
                 if (File.Exists(tasksCsvPath))
                 {
-                    var tasksFileReader = new TaskCsvReader(base64Decoder);
+                    var tasksFileReader = new CsvReader(base64Decoder);
                     var tasksData = new TaskData(tasksFileReader);
                     tasksData.Read(tasksCsvPath);
                 }

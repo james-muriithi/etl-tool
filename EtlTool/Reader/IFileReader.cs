@@ -1,4 +1,6 @@
-﻿namespace Reader
+﻿using System.Collections.Generic;
+
+namespace Reader
 {
     /// <summary>
     /// You can use XML comments to provide summaries to describe interfaces, classes, methods or properties.
@@ -6,6 +8,6 @@
     /// </summary>
     public interface IFileReader
     {
-        void Read(string filePath);
+        List<List<string>> Read(string filePath);
     }
 }
