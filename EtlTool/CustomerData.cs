@@ -66,7 +66,11 @@ namespace EtlTool
                             customer.LastName = row[i];
                     }
 
-                    Console.WriteLine(customer.Id);
+                    // save customer to db
+                    var context = new EtlToolDbContext();
+                    context.Customers.Add(customer);
+
+                    Console.WriteLine("customer saved to database.");
                 }
                 index++;
             }
