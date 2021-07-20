@@ -7,6 +7,8 @@ namespace EtlTool
 {
     partial class Program
     {
+        const string ConnectionString = "server=localhost;port=3306;database=etl_tool;uid=root;password=";
+
         static void Main(string[] args)
         {
             // Suggestion here is to come up with the plan first, for example:
@@ -34,6 +36,8 @@ namespace EtlTool
                     var tasksData = new TaskData(tasksFileReader);
                     tasksData.Read(tasksCsvPath);
                 }
+
+                // var context = new EtlToolDbContext(ConnectionString);
             }
             else
             {

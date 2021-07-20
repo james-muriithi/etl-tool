@@ -19,9 +19,9 @@ namespace Reader
         {
             var encodedText = File.ReadAllText(filePath);
             var decodedText = _decoder.Decode(encodedText);
-
+           
             // - parse data so you have rows with column names;
-
+            
             var unsplittedRows = decodedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             var splittedRows = new List<List<string>>();
 

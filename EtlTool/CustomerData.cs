@@ -19,8 +19,8 @@ namespace EtlTool
             // customer csv rows
             var rows = _fileReader.Read(path);
 
-            //customers list
-            var customers = new List<Customer>();
+            Console.WriteLine(rows.Count);
+
             // columns list
             var columnTitles = new List<string>();
             int index = 0;
@@ -63,14 +63,15 @@ namespace EtlTool
                         else if (columnTitles[i].ToLower() == "last_name")
                             customer.LastName = row[i];
                         else if (columnTitles[i].ToLower() == "phone_number")
-                            customer.LastName = row[i];
+                            customer.PhoneNumber = row[i];
                     }
 
                     // save customer to db
                     var context = new EtlToolDbContext();
                     context.Customers.Add(customer);
+                    context.SaveChanges();
 
-                    Console.WriteLine("customer saved to database.");
+                    Console.WriteLine("customer {0} saved to database.", customer.FirstName);
                 }
                 index++;
             }
