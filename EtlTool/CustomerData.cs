@@ -19,8 +19,6 @@ namespace EtlTool
             // customer csv rows
             var rows = _fileReader.Read(path);
 
-            Console.WriteLine(rows.Count);
-
             // columns list
             var columnTitles = new List<string>();
             int index = 0;

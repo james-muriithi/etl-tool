@@ -18,7 +18,9 @@ namespace Reader
         public List<List<string>> Read(string filePath)
         {
             var encodedText = File.ReadAllText(filePath);
-            var decodedText = _decoder.Decode(encodedText);
+            var decodedText = _decoder.Decode(encodedText).Trim();
+
+            Console.WriteLine(decodedText);
            
             // - parse data so you have rows with column names;
             
