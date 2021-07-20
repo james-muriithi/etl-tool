@@ -16,12 +16,12 @@ namespace EtlTool
             this._connectionString = connectionString;
         }
 
-        public DbSet<Customer> Customers { get; set; }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseMySql(_connectionString, ServerVersion.AutoDetect(_connectionString));
         }
 
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Task> Tasks { get; set; }
     }
 }

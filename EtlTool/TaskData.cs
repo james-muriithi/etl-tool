@@ -48,9 +48,13 @@ namespace EtlTool
                             task.CustomerId = row[i];
                     }
 
-                    tasks.Add(task);
+                    // save task to db
+                    var context = new EtlToolDbContext();
+                    context.Tasks.Add(task);
+                    context.SaveChanges();
 
-                    Console.WriteLine(task.Id);
+                    Console.WriteLine("task {0} saved to database.", task.Id);
+
                 }
                 index++;
             }
