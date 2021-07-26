@@ -3,11 +3,15 @@
 namespace Reader
 {
     /// <summary>
-    /// You can use XML comments to provide summaries to describe interfaces, classes, methods or properties.
-    /// This is very useful and will server a documentation purpose of your code.
+    /// A file reader reader interface to read all types of files
     /// </summary>
     public interface IFileReader
     {
+        /// <summary>
+        /// Implement this method and add functionality to read a particular type of file
+        /// </summary>
+        /// <param name="filePath">The location of the file to be read</param>
+        /// <returns></returns>
         List<List<string>> Read(string filePath);
     }
 }
