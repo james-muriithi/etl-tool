@@ -1,6 +1,7 @@
 ﻿using Reader;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace EtlTool
 {
@@ -66,10 +67,23 @@ namespace EtlTool
 
                     // save customer to db
                     var context = new EtlToolDbContext();
-                    context.Customers.Add(customer);
+
+                    var existingCustomer = context.Customers.FirstOrDefault(cust => cust.Id == customer.Id);
+
+                    if (existingCustomer != null)
+                    {
+                        //update customer
+                        context.Entry(existingCustomer).CurrentValues.SetValues(customer);
+                        Console.WriteLine("customer {0} was updated.", customer.FirstName);
+                    }
+                    else
+                    {
+                        context.Customers.Add(customer);
+                        Console.WriteLine("customer {0} saved to database.", customer.FirstName);
+                    }
+                    
                     context.SaveChanges();
 
-                    Console.WriteLine("customer {0} saved to database.", customer.FirstName);
                 }
                 index++;
             }

@@ -1,6 +1,7 @@
 ﻿using Reader;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EtlTool
 {
@@ -50,11 +51,18 @@ namespace EtlTool
 
                     // save task to db
                     var context = new EtlToolDbContext();
-                    context.Tasks.Add(task);
+                    var existingTask = context.Tasks.FirstOrDefault(t => t.Id == task.Id);
+                    if(existingTask != null)
+                    {
+                        context.Entry(existingTask).CurrentValues.SetValues(task);
+                        Console.WriteLine("task {0} was updated.", task.Id);
+                    }
+                    else
+                    {
+                        context.Tasks.Add(task);
+                        Console.WriteLine("task {0} saved to database.", task.Id);
+                    }
                     context.SaveChanges();
-
-                    Console.WriteLine("task {0} saved to database.", task.Id);
-
                 }
                 index++;
             }
