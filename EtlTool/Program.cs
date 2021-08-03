@@ -9,7 +9,7 @@ namespace EtlTool
     {
         const string ConnectionString = "server=localhost;port=3306;database=etl_tool_1;uid=root;password=";
         private const int IndexOfPathToCustomerCsvFile = 0;
-        private const int NumberOfRequiredArguments = 0;
+        private const int NumberOfRequiredArguments = 2;
 
         // Ok, lets start with code structuring. Right now Main method is
         // a bit messy and has some duplications. Ok for small amount of code,
@@ -51,36 +51,39 @@ namespace EtlTool
 
         static void Main(string[] args)
         {
+            // Now the interesting part:
+            // To avoid big parts of code be nested inside curly brackets of some expression,
+            // you can invert the 'if' statement:  
+            
             // Same here. Constant will make another developer to understand what you mean by this line.
-            if(args.Length > NumberOfRequiredArguments)
-            {
-                // initialize a Base64Decoder object
-                var base64Decoder = new Base64Decoder();
-
-                // To make code more readable it is good to avoid "magic numbers". If you have to use
-                // some hardcoded value in your code - best practice would be to put inside constant.
-                var customerCsvPath = @args[IndexOfPathToCustomerCsvFile];
-                if (File.Exists(customerCsvPath))
-                {
-                    var customerCsvReader = new CsvReader(base64Decoder);
-                    var customerCsv = new CustomerData(customerCsvReader);
-                    customerCsv.Read(customerCsvPath);
-                }
-
-                var tasksCsvPath = @args[1];
-                if (File.Exists(tasksCsvPath))
-                {
-                    var tasksFileReader = new CsvReader(base64Decoder);
-                    var tasksData = new TaskData(tasksFileReader);
-                    tasksData.Read(tasksCsvPath);
-                }
-
-                // var context = new EtlToolDbContext(ConnectionString);
-            }
-            else
+            if (args.Length < NumberOfRequiredArguments) // And you see? Now this constant makes even more sense! 
             {
                 Console.WriteLine("please provide file path arguments");
+                return;
             }
+
+            // initialize a Base64Decoder object
+            var base64Decoder = new Base64Decoder();
+
+            // To make code more readable it is good to avoid "magic numbers". If you have to use
+            // some hardcoded value in your code - best practice would be to put inside constant.
+            var customerCsvPath = @args[IndexOfPathToCustomerCsvFile];
+            if (File.Exists(customerCsvPath))
+            {
+                var customerCsvReader = new CsvReader(base64Decoder);
+                var customerCsv = new CustomerData(customerCsvReader);
+                customerCsv.Read(customerCsvPath);
+            }
+
+            var tasksCsvPath = @args[1];
+            if (File.Exists(tasksCsvPath))
+            {
+                var tasksFileReader = new CsvReader(base64Decoder);
+                var tasksData = new TaskData(tasksFileReader);
+                tasksData.Read(tasksCsvPath);
+            }
+
+            // var context = new EtlToolDbContext(ConnectionString);
         }
     }
 }
