@@ -9,6 +9,7 @@ namespace EtlTool
     {
         const string ConnectionString = "server=localhost;port=3306;database=etl_tool_1;uid=root;password=";
         private const int IndexOfPathToCustomerCsvFile = 0;
+        private const int NumberOfRequiredArguments = 0;
 
         // Ok, lets start with code structuring. Right now Main method is
         // a bit messy and has some duplications. Ok for small amount of code,
@@ -54,7 +55,8 @@ namespace EtlTool
 
             // check if arguments were provided
 
-            if(args.Length > 0)
+            // Same here. Constant will make another developer to understand what you mean by this line.
+            if(args.Length > NumberOfRequiredArguments)
             {
                 // initialize a Base64Decoder object
                 var base64Decoder = new Base64Decoder();
