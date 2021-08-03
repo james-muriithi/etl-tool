@@ -8,6 +8,7 @@ namespace EtlTool
     partial class Program
     {
         const string ConnectionString = "server=localhost;port=3306;database=etl_tool_1;uid=root;password=";
+        private const int IndexOfPathToCustomerCsvFile = 0;
 
         // Ok, lets start with code structuring. Right now Main method is
         // a bit messy and has some duplications. Ok for small amount of code,
@@ -58,8 +59,9 @@ namespace EtlTool
                 // initialize a Base64Decoder object
                 var base64Decoder = new Base64Decoder();
 
-                // Feel free to extand or rewrite this plan.
-                var customerCsvPath = @args[0];
+                // To make code more readable it is good to avoid "magic numbers". If you have to use
+                // some hardcoded value in your code - best practice would be to put inside constant.
+                var customerCsvPath = @args[IndexOfPathToCustomerCsvFile];
                 if (File.Exists(customerCsvPath))
                 {
                     var customerCsvReader = new CsvReader(base64Decoder);
