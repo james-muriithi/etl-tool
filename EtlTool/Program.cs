@@ -70,6 +70,19 @@ namespace EtlTool
             var customerCsvPath = @args[IndexOfPathToCustomerCsvFile];
             if (File.Exists(customerCsvPath))
             {
+                // Another important thing: I see that you used the Strategy Pattern by providing
+                // decoder to CsvReader and CsvReader to CustomerData. Very well but has some issues.
+                // In current situation it violates the Single Responsibility Principal because now
+                // the CsvReader not only reads the CSV files, but also decodes them first using provided decoder.
+                // 
+                // Same for Read method of CustomerData - it actually does everything :) It decodes read files,
+                // then extracts rows from CSV and only then reads customer data... AND then saves it to database!
+                // Well at least four different and not related to each other things are going on in one place...
+                //
+                // Going back to Strategy. Fix is simple: Strategy should be used on the level of Program class. 
+                // You can pick different implementations hidden in some methods and classes based on user input.
+                // E.g. use different decryption or parsing algorithms based on provided arguments.
+                
                 var customerCsvReader = new CsvReader(base64Decoder);
                 var customerCsv = new CustomerData(customerCsvReader);
                 customerCsv.Read(customerCsvPath);
