@@ -51,10 +51,6 @@ namespace EtlTool
 
         static void Main(string[] args)
         {
-            // Suggestion here is to come up with the plan first, for example:
-
-            // check if arguments were provided
-
             // Same here. Constant will make another developer to understand what you mean by this line.
             if(args.Length > NumberOfRequiredArguments)
             {
