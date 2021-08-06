@@ -3,28 +3,24 @@ using System.IO;
 using System;
 using System.Collections.Generic;
 
-namespace Reader
+namespace Parser
 {
-    public class CsvReader : IFileReader
+    public class CsvParser : IFileParser
     {
-        private readonly IDecoder _decoder;
         private string _delimeter = ",";
 
-        public CsvReader(IDecoder decoder)
+        /// <summary>
+        /// A method to parse csv data
+        /// </summary>
+        /// <param name="data">The data to be parsed</param>
+        /// <returns>A list of list strings</returns>
+        public List<List<string>> Parse(string data)
         {
-            this._decoder = decoder;
-        }
-
-        public List<List<string>> Read(string filePath)
-        {
-            var encodedText = File.ReadAllText(filePath);
-            var decodedText = _decoder.Decode(encodedText).Trim();
-
             // - parse data so you have rows with column names;
-            var unsplittedRows = decodedText.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            var unsplittedRows = data.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             var splittedRows = new List<List<string>>();
 
-            foreach(var unsplitttedRow in unsplittedRows)
+            foreach (var unsplitttedRow in unsplittedRows)
             {
                 var splittedRow = new List<string>();
 
@@ -43,3 +39,4 @@ namespace Reader
         }
     }
 }
+
