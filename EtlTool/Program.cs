@@ -9,6 +9,7 @@ namespace EtlTool
     {
         const string ConnectionString = "server=localhost;port=3306;database=etl_tool_1;uid=root;password=";
         private const int IndexOfPathToCustomerCsvFile = 0;
+        private const int IndexOfPathToTaskCsvFile = 1;
         private const int NumberOfRequiredArguments = 2;
 
         // Ok, lets start with code structuring. Right now Main method is
@@ -51,12 +52,7 @@ namespace EtlTool
 
         static void Main(string[] args)
         {
-            // Now the interesting part:
-            // To avoid big parts of code be nested inside curly brackets of some expression,
-            // you can invert the 'if' statement:  
-            
-            // Same here. Constant will make another developer to understand what you mean by this line.
-            if (args.Length < NumberOfRequiredArguments) // And you see? Now this constant makes even more sense! 
+            if (args.Length < NumberOfRequiredArguments)
             {
                 Console.WriteLine("please provide file path arguments");
                 return;
@@ -88,15 +84,13 @@ namespace EtlTool
                 customerCsv.Read(customerCsvPath);
             }
 
-            var tasksCsvPath = @args[1];
+            var tasksCsvPath = @args[IndexOfPathToTaskCsvFile];
             if (File.Exists(tasksCsvPath))
             {
                 var tasksFileReader = new CsvReader(base64Decoder);
                 var tasksData = new TaskData(tasksFileReader);
                 tasksData.Read(tasksCsvPath);
             }
-
-            // var context = new EtlToolDbContext(ConnectionString);
         }
     }
 }
