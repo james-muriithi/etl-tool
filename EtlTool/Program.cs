@@ -1,5 +1,6 @@
 ﻿using Cryptography;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Parser;
 
@@ -19,43 +20,64 @@ namespace EtlTool
                 Console.WriteLine("please provide file path arguments");
                 return;
             }
+            
+            // WARNING! Argument indexes are on random positions. Consider implement a smart arguments picker.
 
-            // initialize a csv parser
-            var csvParser = new CsvParser();
-
-            var customerCsvPath = @args[IndexOfPathToCustomerCsvFile];
-            if (File.Exists(customerCsvPath))
-            {
-                var encryptedCustomerData = FileReader.Read(customerCsvPath);
-                var decryptedCustomerData = Decode("base64", encryptedCustomerData);
-                var customerParsedData = csvParser.Parse(decryptedCustomerData);
-                var customerModels = CustomerData.MapToModel(customerParsedData);
-                CustomerData.SaveToDatabase(customerModels);
-            }
-
-            var tasksCsvPath = @args[IndexOfPathToTaskCsvFile];
-            if (File.Exists(tasksCsvPath))
-            {
-                var encryptedTasksData = FileReader.Read(tasksCsvPath);
-                var decryptedTasksData = Decode("base64", encryptedTasksData);
-                var tasksParsedData = csvParser.Parse(decryptedTasksData);
-                var tasksModels = TaskData.MapToModel(tasksParsedData);
-                TaskData.SaveToDatabase(tasksModels);
-            }
+            var path = args[1];
+            var encryptedData = FileReader.Read(path);
+            var decryptedData = Decode(args[3], encryptedData);
+            var parsedData = Parse(args[4], decryptedData);
+            SaveToDatabase(args[0], parsedData);
         }
 
         public static string Decode(string algorithm, string encodedData)
         {
+            var decoder = (IDecoder)null;
+            
             switch (algorithm.ToLower())
             {
                 case "base64":
-                    // initialize a Base64Decoder object
-                    var base64Decoder = new Base64Decoder();
-                    return base64Decoder.Decode(encodedData);
-
+                    decoder = new Base64Decoder();
+                    break;
                 default:
                     throw new ArgumentException(String.Format("{0} is not a supported algorithm", algorithm), "algorithm");
             }
+            
+            return decoder.Decode(encodedData);
+        }
+
+        private static List<List<string>> Parse(string fileFormat, string decryptedData)
+        {
+            IFileParser parser = new CsvParser();
+            switch (fileFormat)
+            {
+                case "csv":
+                    parser = new CsvParser();
+                    break;
+                case "tsv":
+                    parser = new TsvParser();
+                    break;
+                default:
+                    throw new NotSupportedException();
+            }
+
+            return parser.Parse(decryptedData);
+        }
+
+        private static void SaveToDatabase(string entityType, List<List<string>> parsedData)
+        {
+            if (entityType == "--customer")
+            {
+                var customerModels = CustomerData.MapToModel(parsedData);
+                CustomerData.SaveToDatabase(customerModels);
+            }
+            else if (entityType == "--task")
+            {
+                var tasksModels = TaskData.MapToModel(parsedData);
+                TaskData.SaveToDatabase(tasksModels);
+            }
+            else if (entityType == "--company") 
+                throw new NotImplementedException();
         }
     }
 }

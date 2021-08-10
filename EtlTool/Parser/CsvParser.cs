@@ -38,5 +38,21 @@ namespace Parser
             return splittedRows;
         }
     }
+
+    /// <summary>
+    /// Represents the implementation of <see cref="IFileParser"/> interface
+    /// that is designed to parse data from TSV files.
+    /// </summary>
+    public class TsvParser : IFileParser
+    {
+        /// <summary>
+        /// Parses given <see cref="data"/> and returns given a List of Lists of strings,
+        /// that represent rows and columns from provided string.
+        /// </summary>
+        public List<List<string>> Parse(string data)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
 
