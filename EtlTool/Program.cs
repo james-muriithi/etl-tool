@@ -7,7 +7,6 @@ namespace EtlTool
 {
     partial class Program
     {
-        const string ConnectionString = "server=localhost;port=3306;database=etl_tool_1;uid=root;password=";
         private const int IndexOfPathToCustomerCsvFile = 0;
         private const int IndexOfPathToTaskCsvFile = 1;
         private const int NumberOfRequiredArguments = 2;

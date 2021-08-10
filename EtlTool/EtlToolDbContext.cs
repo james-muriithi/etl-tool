@@ -1,4 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
 
 namespace EtlTool
 {
@@ -8,7 +11,11 @@ namespace EtlTool
 
         public EtlToolDbContext()
         {
-            this._connectionString = "server=localhost;port=3306;database=etl_tool;uid=root;password=";
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json")
+                .Build();
+            this._connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
         public EtlToolDbContext(string connectionString)
