@@ -1,45 +1,53 @@
 ﻿using Cryptography;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using Parser;
 
 namespace EtlTool
 {
     partial class Program
     {
-        private const int IndexOfPathToCustomerCsvFile = 0;
-        private const int IndexOfPathToTaskCsvFile = 1;
-        private const int NumberOfRequiredArguments = 2;
-
         static void Main(string[] args)
-        {
-            if (args.Length < NumberOfRequiredArguments)
-            {
-                Console.WriteLine("please provide file path arguments");
-                return;
-            }
-            
+        {            
             // WARNING! Argument indexes are on random positions. Consider implement a smart arguments picker.
 
-            var path = args[1];
-            var encryptedData = FileReader.Read(path);
-            var decryptedData = Decode(args[3], encryptedData);
-            var parsedData = Parse(args[4], decryptedData);
-            SaveToDatabase(args[0], parsedData);
+            var path = GetArgument(args, "--path");
+
+            if (String.IsNullOrEmpty(path))
+            {
+                Console.WriteLine("please provide a path to the file e.g --path C:\\customers.csv");
+                return;
+            }
+
+            var entityType = GetArgument(args, "--entity");
+
+            if (String.IsNullOrEmpty(entityType))
+            {
+                Console.WriteLine("please provide an entity type e.g --entity customer");
+                return;
+            }
+
+            var encryptionAlgorithm = GetArgument(args, "--enc");
+            var fileType = GetArgument(args, "--f");
+
+            var encryptedData = FileReader.Read(path).Trim();
+            var decryptedData = Decode(encryptionAlgorithm, encryptedData).Trim();
+            var parsedData = Parse(fileType, decryptedData);
+            SaveToDatabase(entityType, parsedData);
         }
 
         public static string Decode(string algorithm, string encodedData)
         {
-            var decoder = (IDecoder)null;
+            var decoder = new Base64Decoder();
             
-            switch (algorithm.ToLower())
+            switch (algorithm)
             {
                 case "base64":
                     decoder = new Base64Decoder();
                     break;
                 default:
-                    throw new ArgumentException(String.Format("{0} is not a supported algorithm", algorithm), "algorithm");
+                    return encodedData;
             }
             
             return decoder.Decode(encodedData);
@@ -56,8 +64,6 @@ namespace EtlTool
                 case "tsv":
                     parser = new TsvParser();
                     break;
-                default:
-                    throw new NotSupportedException();
             }
 
             return parser.Parse(decryptedData);
@@ -65,18 +71,26 @@ namespace EtlTool
 
         private static void SaveToDatabase(string entityType, List<List<string>> parsedData)
         {
-            if (entityType == "--customer")
+            if (entityType == "customer")
             {
                 var customerModels = CustomerData.MapToModel(parsedData);
                 CustomerData.SaveToDatabase(customerModels);
             }
-            else if (entityType == "--task")
+            else if (entityType == "task")
             {
                 var tasksModels = TaskData.MapToModel(parsedData);
                 TaskData.SaveToDatabase(tasksModels);
             }
             else if (entityType == "--company") 
                 throw new NotImplementedException();
+        }
+
+        static string GetArgument(IEnumerable<string> args, string option)
+        {
+            return args.SkipWhile(i => i != option)
+                .Skip(1)
+                .Take(1)
+                .FirstOrDefault();
         }
     }
 }

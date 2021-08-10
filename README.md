@@ -1,5 +1,20 @@
 # ETL TOOL
 
+## How to use
+> arguments
+
+--path  (required) path to the file.
+
+--entity  (required) specifies entities in the provided file e.g. customer || task
+
+--enc (optional) specifies if the encryption algorithm of the data in the file. e.g. base64
+
+--f (optional) specifies the format of the provided file e.g. csv
+
+```console
+foo@bar:~$ EtlTool.exe --path C:\\customer.csv --entity customer --enc base64 -f csv
+```
+
 ## Tasks
 1. **ETL Tool** - create a simple console application that will extract initial data from files of
 the given format, transform it to MySQL format and load to MySQL database.
